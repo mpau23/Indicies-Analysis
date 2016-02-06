@@ -10,6 +10,10 @@
 
 <body>
 
+    <svg class="chart">
+
+    </div>
+
     <div class="main-content">
         <div ui-view> </div>
     </div>
@@ -24,7 +28,8 @@
 var IndiciesAnalysis = angular.module('IndiciesAnalysis', ["ui.router", "ngCookies", "LocalStorageModule"]);
 </script>
 <script src="/js/jquery.min.js"></script>
-<script src="/js/app.min.js"></script>
 <script src="/js/date-en-GB.js"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="/js/app.min.js"></script>
 
 </html>

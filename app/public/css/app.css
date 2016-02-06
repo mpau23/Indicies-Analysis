@@ -1,4 +1,3 @@
-//@import "partials/grid";
 .bar {
   fill: steelblue;
 }
@@ -16,8 +15,4 @@
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  //display: none;
 }
