@@ -25,6 +25,7 @@ gulp.task('appJs', function() {
     return gulp.src([
             './app/src/controllers/*.js',
             './app/src/services/*.js',
+            './app/src/directives/*.js',
             './app/src/*.js',
             './app/assets/js/*.js'
         ])
@@ -66,6 +67,7 @@ gulp.task('watch', ['default'], function() {
     gulp.watch([
         './app/src/controllers/*.js',
         './app/src/services/*.js',
+        './app/src/directives/*.js',
         './app/src/*.js',
         './app/assets/js/*.js'
     ], ['appJs']);
