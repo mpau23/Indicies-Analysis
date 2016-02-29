@@ -19,7 +19,7 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     left: 40
                 },
                 width = 1280 - margin.left - margin.right,
-                height = 720 - margin.top - margin.bottom;
+                height = 620 - margin.top - margin.bottom;
 
             var svg = d3.select(".chart")
                 .attr("width", width + margin.left + margin.right)

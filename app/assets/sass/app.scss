@@ -1,23 +1,90 @@
-//@import "partials/grid";
+@import "normalize";
+@import "compass/css3";
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-weight: 100;
+    letter-spacing: 0.01em;
+    font-family: sans-serif;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+.hidden {
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    z-index: -1
+}
+
+body {
+    min-width: 320px;
+    font-size: 16px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    top: 0;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 2rem;
+    color: #fff;
+    font-weight: normal;
+}
+
+header {
+    background-color: steelblue;
+    h1 {
+        text-align: center;
+    }
+}
+
+fieldset {
+    border: none;
+    float: left;
+}
+
+.graph-toggle {
+    margin-top: 20px;
+    width: 100%;
+    float: right;
+}
+
 .bar {
-  fill: steelblue;
+    fill: steelblue;
 }
 
 .bar:hover {
-  fill: brown;
+    fill: brown;
 }
 
 .axis {
-  font: 10px sans-serif;
+    font: 10px sans-serif;
 }
 
 .axis path,
 .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
 }
 
 .x.axis path {
-  //display: none;
+    //display: none;
 }
