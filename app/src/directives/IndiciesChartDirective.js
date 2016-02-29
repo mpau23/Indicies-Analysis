@@ -104,8 +104,6 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     .attr("transform", "translate(0," + y(0) + ")")
                     .call(xAxis);
 
-                console.log("hello");
-
                 svg.selectAll(".bar").remove();
 
                 svg.selectAll("g.bar")
@@ -138,7 +136,6 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                 indiciesDataToPlot = newVal;
 
                 if (indiciesDataToPlot) {
-                    console.log(indiciesDataToPlot);
                     if (oldVal) {
                         redrawChart(oldVal);
                     } else {

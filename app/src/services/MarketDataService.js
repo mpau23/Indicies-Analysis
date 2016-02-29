@@ -11,8 +11,6 @@ IndiciesAnalysis.factory('MarketDataService', ['$http', '$q', function($http, $q
 
                         var marketDataArray = [];
 
-                        console.log(response.data);
-
                         angular.forEach(response.data, function(day, key) {
 
                             var date = Date.parse(day.Date);
