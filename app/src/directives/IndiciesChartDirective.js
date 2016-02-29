@@ -5,10 +5,8 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
         link: function(scope, elem, attrs) {
 
             var data = $parse(attrs.chartData);
-            console.log(data);
 
             var indiciesDataToPlot = data(scope);
-            console.log(indiciesDataToPlot);
 
             var d3 = $window.d3;
 
@@ -96,12 +94,56 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     });
             }
 
+            function redrawChart(oldData) {
+
+                setChartParameters();
+
+                svg.selectAll("g.y").call(yAxis);
+
+                svg.selectAll("g.x")
+                    .attr("transform", "translate(0," + y(0) + ")")
+                    .call(xAxis);
+
+                console.log("hello");
+
+                svg.selectAll(".bar").remove();
+
+                svg.selectAll("g.bar")
+                    .data(indiciesDataToPlot)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d) {
+                        return x(d.expiry.date);
+                    })
+                    .attr("width", x.rangeBand())
+                    .attr("y", function(d) {
+                        if (d.variance) {
+                            return y(Math.max(0, d.variance));
+                        } else {
+                            return 0;
+                        }
+                    })
+                    .attr("height", function(d) {
+                        if (d.variance) {
+                            return Math.abs(y(d.variance) - y(0));;
+
+                        } else {
+                            return 0;
+                        }
+                    });
+            }
+
             scope.$watchCollection(data, function(newVal, oldVal) {
 
                 indiciesDataToPlot = newVal;
 
                 if (indiciesDataToPlot) {
-                    drawChart();
+                    console.log(indiciesDataToPlot);
+                    if (oldVal) {
+                        redrawChart(oldVal);
+                    } else {
+                        drawChart();
+                    }
                 }
             });
 

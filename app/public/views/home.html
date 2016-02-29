@@ -1,1 +1,12 @@
+<form>
+    <label for="market">Market: </label>
+    <select id="market" ng-model="marketKey">
+        <option value="{{market}}" ng-repeat="market in marketKeys">{{market}}</option>
+    </select>
+
+    <label for="dte">Days to expiry: </label>
+    <input type="text" id="dte" ng-model="daysToExpiry">
+    <input type="button" id="updateButton" ng-click="changeDaysToExpiry()" value="Update">
+</form>
+
 <div indicies-chart-directive chart-data="marketData"></div>

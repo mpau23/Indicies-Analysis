@@ -2,25 +2,27 @@ IndiciesAnalysis.factory('MarketDataService', ['$http', '$q', function($http, $q
 
     var marketDataService = {
 
-        getDailyMarketData: function(startYear) {
+        getDailyMarketData: function(startYear, market) {
 
-            return marketDataPromise = $http.get('/api/get/market-data/daily/' + startYear)
+            return marketDataPromise = $http.get('/api/get/market-data/local/daily/' + market)
                 .then(function(response) {
 
                     if (response) {
 
                         var marketDataArray = [];
 
-                        angular.forEach(response.data.dataset.data, function(day, key) {
+                        console.log(response.data);
 
-                            var date = Date.parse(day[0]);
+                        angular.forEach(response.data, function(day, key) {
+
+                            var date = Date.parse(day.Date);
 
                             marketDataArray[date.getTime()] = {
-                                date: day[0],
-                                open: day[1],
-                                high: day[2],
-                                low: day[3],
-                                close: day[4]
+                                date: day.Date,
+                                open: day.Open,
+                                high: day.High,
+                                low: day.Low,
+                                close: day.Close
                             };
                         });
                         return marketDataArray;

@@ -3,10 +3,25 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
         renderMarketData();
 
-        function renderMarketData() {
+        $scope.marketKeys = ['SPY', 'FTSE', 'GDAXI'];
 
-            var marketData = MarketDataService.getDailyMarketData(2000);
-            var monthlyOptions = CalendarDataService.getMonthlyOptions(12, 2000);
+        $scope.changeDaysToExpiry = function() {
+
+            renderMarketData($scope.daysToExpiry, $scope.marketKey);
+        };
+
+        function renderMarketData(daysToExpiry, marketKey) {
+
+            if (!daysToExpiry) {
+                daysToExpiry = 15;
+            }
+
+            if(!marketKey) {
+                marketKey = 'SPY';
+            }
+
+            var marketData = MarketDataService.getDailyMarketData(2000, marketKey);
+            var monthlyOptions = CalendarDataService.getMonthlyOptions(daysToExpiry, 2000);
 
             $q.all([marketData]).then(function(response) {
 
@@ -73,7 +88,6 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
                 });
 
-                console.log(monthlyOptions);
                 $scope.marketData = monthlyOptions;
 
             });
