@@ -10,7 +10,7 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
 
             var d3 = $window.d3;
 
-            var x, y, xAxis, yAxis;
+            var x, y, xAxis, yAxis, tip;
 
             var margin = {
                     top: 20,
@@ -52,6 +52,31 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     return d.variance;
                 })).nice();
 
+                tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function(d) {
+                        return "
+                            <div>
+                                <strong>Variance:</strong> 
+                                <span style='color:red'>" + (d.variance*100).toFixed(2) + "%</span>
+                            </div>
+                            <div>
+                                <strong>High/Low Variance:</strong> 
+                                <span style='color:red'>" + (d.highLowVariance*100).toFixed(2) + "%</span>
+                            </div>
+                            <div>
+                                <strong>Open Date</strong>
+                                <span style='color:red'>" + d.open.date + "</span>
+                            </div>
+                            <div>
+                                <strong>Expiry Date</strong>
+                                <span style='color:red'>" + d.expiry.date + "</span>
+                            </div>";
+                    });
+
+                svg.call(tip);
+
             }
 
             function drawChart() {
@@ -69,10 +94,41 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     .attr("class", "y axis")
                     .call(yAxis);
 
-                svg.selectAll(".bar")
+                svg.selectAll("g.bar")
                     .data(indiciesDataToPlot)
                     .enter().append("rect")
-                    .attr("class", "bar")
+                    .attr("class", "bar highlow")
+                    .attr("data-value", function(d) {
+                        return d.highLowVariance;
+                    })
+                    .attr("x", function(d) {
+                        return x(d.expiry.date);
+                    })
+                    .attr("width", x.rangeBand())
+                    .attr("y", function(d) {
+                        if (d.highLowVariance) {
+                            return y(Math.max(0, d.highLowVariance + d.variance));
+                        } else {
+                            return 0;
+                        }
+                    })
+                    .attr("height", function(d) {
+                        if (d.highLowVariance) {
+                            return Math.abs(y(d.highLowVariance + d.variance) - y(0));
+                        } else {
+                            return 0;
+                        }
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);;
+
+                svg.selectAll("g.bar")
+                    .data(indiciesDataToPlot)
+                    .enter().append("rect")
+                    .attr("class", "bar variance")
+                    .attr("data-value", function(d) {
+                        return d.variance;
+                    })
                     .attr("x", function(d) {
                         return x(d.expiry.date);
                     })
@@ -86,12 +142,14 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     })
                     .attr("height", function(d) {
                         if (d.variance) {
-                            return Math.abs(y(d.variance) - y(0));;
+                            return Math.abs(y(d.variance) - y(0));
 
                         } else {
                             return 0;
                         }
-                    });
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
             }
 
             function redrawChart(oldData) {
@@ -109,7 +167,38 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                 svg.selectAll("g.bar")
                     .data(indiciesDataToPlot)
                     .enter().append("rect")
-                    .attr("class", "bar")
+                    .attr("class", "bar highlow")
+                    .attr("data-value", function(d) {
+                        return d.highLowVariance;
+                    })
+                    .attr("x", function(d) {
+                        return x(d.expiry.date);
+                    })
+                    .attr("width", x.rangeBand())
+                    .attr("y", function(d) {
+                        if (d.highLowVariance) {
+                            return y(Math.max(0, d.highLowVariance + d.variance));
+                        } else {
+                            return 0;
+                        }
+                    })
+                    .attr("height", function(d) {
+                        if (d.highLowVariance) {
+                            return Math.abs(y(d.highLowVariance + d.variance) - y(0));
+                        } else {
+                            return 0;
+                        }
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
+
+                svg.selectAll("g.bar")
+                    .data(indiciesDataToPlot)
+                    .enter().append("rect")
+                    .attr("class", "bar variance")
+                    .attr("data-value", function(d) {
+                        return d.variance;
+                    })
                     .attr("x", function(d) {
                         return x(d.expiry.date);
                     })
@@ -123,12 +212,15 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     })
                     .attr("height", function(d) {
                         if (d.variance) {
-                            return Math.abs(y(d.variance) - y(0));;
+                            return Math.abs(y(d.variance) - y(0));
 
                         } else {
                             return 0;
                         }
-                    });
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
+
             }
 
             scope.$watchCollection(data, function(newVal, oldVal) {
