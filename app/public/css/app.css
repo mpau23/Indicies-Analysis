@@ -633,6 +633,16 @@ fieldset {
   shape-rendering: crispEdges;
 }
 
+.y.axis .tick text {
+  cursor: pointer;
+}
+.y.axis .tick text:hover + line {
+  opacity: 1;
+}
+.y.axis .tick line {
+  opacity: 0;
+}
+
 .d3-tip {
   line-height: 1;
   font-weight: bold;
