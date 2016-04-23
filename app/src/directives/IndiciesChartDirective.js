@@ -96,8 +96,7 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     .attr("class", "x axis")
                     .attr("transform", "translate(0," + y(0) + ")")
                     .call(xAxis)
-                    .selectAll("text")
-                    .style("display", "none");
+                    .selectAll("text");
 
                 svg.append("g")
                     .attr("class", "y axis")

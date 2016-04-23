@@ -642,6 +642,10 @@ fieldset {
   transition: opacity .3s;
 }
 
+.x.axis .tick text {
+  display: none;
+}
+
 .d3-tip {
   line-height: 1;
   font-weight: bold;
