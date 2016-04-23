@@ -52,11 +52,13 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
                     if (expiryMarketData && openMarketData) {
 
+                        monthlyOption.expiry.date = expiryDate.toString("d-MMM-yyyy");
                         monthlyOption.expiry.open = expiryMarketData.open;
                         monthlyOption.expiry.close = expiryMarketData.close;
                         monthlyOption.expiry.high = expiryMarketData.high;
                         monthlyOption.expiry.low = expiryMarketData.low;
 
+                        monthlyOption.open.date = openDate.toString("d-MMM-yyyy");
                         monthlyOption.open.open = openMarketData.open;
                         monthlyOption.open.close = openMarketData.close;
                         monthlyOption.open.high = openMarketData.high;

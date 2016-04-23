@@ -71,8 +71,16 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                                 <span style='color:red'>" + d.open.date + "</span>
                             </div>
                             <div>
+                                <strong>Open Price</strong>
+                                <span style='color:red'>" + d.expiry.open.toFixed(2) + "</span>
+                            </div>
+                            <div>
                                 <strong>Expiry Date</strong>
                                 <span style='color:red'>" + d.expiry.date + "</span>
+                            </div>
+                            <div>
+                                <strong>Expiry Price</strong>
+                                <span style='color:red'>" + d.expiry.close.toFixed(2) + "</span>
                             </div>";
                     });
 
