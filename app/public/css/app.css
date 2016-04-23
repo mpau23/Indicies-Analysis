@@ -636,11 +636,10 @@ fieldset {
 .y.axis .tick text {
   cursor: pointer;
 }
-.y.axis .tick text:hover + line {
-  opacity: 1;
-}
 .y.axis .tick line {
   opacity: 0;
+  stroke: steelBlue;
+  transition: opacity .3s;
 }
 
 .d3-tip {

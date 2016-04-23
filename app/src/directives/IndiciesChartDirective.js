@@ -43,15 +43,15 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                 y = d3.scale.linear()
                     .range([height, 0]);
 
+                y.domain(d3.extent(indiciesDataToPlot, function(d) {
+                    return d.variance;
+                })).nice();
+
                 yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
                     .ticks(20, "%")
                     .tickSize(-width, 0, 0);
-
-                y.domain(d3.extent(indiciesDataToPlot, function(d) {
-                    return d.variance;
-                })).nice();
 
                 tip = d3.tip()
                     .attr('class', 'd3-tip')

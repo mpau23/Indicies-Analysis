@@ -94,14 +94,11 @@ fieldset {
 .y.axis .tick {
     text {
         cursor: pointer;
-        &:hover {
-           + line {
-                opacity: 1;
-            }
-        }
     }
     line {
         opacity: 0;
+        stroke:steelBlue;
+        transition: opacity .3s;
     }
 }
 
