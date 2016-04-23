@@ -46,7 +46,8 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                 yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
-                    .ticks(20, "%");
+                    .ticks(20, "%")
+                    .tickSize(-width, 0, 0);
 
                 y.domain(d3.extent(indiciesDataToPlot, function(d) {
                     return d.variance;

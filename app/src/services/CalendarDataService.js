@@ -36,7 +36,7 @@ IndiciesAnalysis.factory('CalendarDataService', ['$http', '$q', function($http, 
             angular.forEach(monthlyExpiresArray, function(monthlyExpiry, key) {
 
                 var close = Date.parse(monthlyExpiry.expiry.date);
-                close.addWeekdays(-daysUntilExpiry);
+                close.addDays(-daysUntilExpiry);
                 monthlyExpiry.open = {
                     date: close.toString("d-MMM-yyyy")
                 }

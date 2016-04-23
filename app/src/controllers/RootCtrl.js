@@ -16,7 +16,7 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                 daysToExpiry = 15;
             }
 
-            if(!marketKey) {
+            if (!marketKey) {
                 marketKey = 'SPY';
             }
 
@@ -32,26 +32,36 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                     var openDate = Date.parse(monthlyOption.open.date);
                     var expiryMarketData = marketDataArray[expiryDate.getTime()];
                     var openMarketData = marketDataArray[openDate.getTime()];
+                    var threshold = 5,
+                        expiryThreshold = 0,
+                        openThreshold = 0;
 
-                    if (expiryMarketData) {
+                    while (!expiryMarketData && (expiryThreshold <= threshold)) {
+                        expiryDate.addDays(1);
+                        expiryMarketData = marketDataArray[expiryDate.getTime()];
+                        expiryThreshold++;
+                    }
+                    expiryThreshold = 0;
+
+                    while (!openMarketData && (openThreshold <= threshold)) {
+                        openDate.addDays(1);
+                        openMarketData = marketDataArray[openDate.getTime()];
+                        openThreshold++;
+                    }
+                    openThreshold = 0;
+
+                    if (expiryMarketData && openMarketData) {
+
                         monthlyOption.expiry.open = expiryMarketData.open;
                         monthlyOption.expiry.close = expiryMarketData.close;
                         monthlyOption.expiry.high = expiryMarketData.high;
                         monthlyOption.expiry.low = expiryMarketData.low;
-                    } else {
-                        console.log(expiryDate + ": not in market data");
-                    }
 
-                    if (openMarketData) {
                         monthlyOption.open.open = openMarketData.open;
                         monthlyOption.open.close = openMarketData.close;
                         monthlyOption.open.high = openMarketData.high;
                         monthlyOption.open.low = openMarketData.low;
-                    } else {
-                        console.log(openDate + ": not in market data");
-                    }
 
-                    if (expiryMarketData && openMarketData) {
                         monthlyOption.variance = (expiryMarketData.close - openMarketData.open) / openMarketData.open;
 
                         var highestHigh = monthlyOption.open.high;
@@ -59,7 +69,7 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
                         while (expiryDate > openDate) {
 
-                            openDate.addWeekdays(1);
+                            openDate.addDays(1);
 
                             if (marketDataArray[openDate.getTime()]) {
 
@@ -84,6 +94,8 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                                 ((lowestLow - monthlyOption.open.open) / monthlyOption.open.open) - monthlyOption.variance;
                         }
 
+                    } else {
+                        console.log("No market data for: Expiry=" + expiryDate + ", Open=" + openDate);
                     }
 
                 });
