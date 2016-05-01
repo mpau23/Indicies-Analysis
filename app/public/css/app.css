@@ -609,17 +609,23 @@ fieldset {
 }
 
 .variance {
-  fill: steelblue;
+  fill: #4682B4;
   z-index: 20;
 }
 
 .highlow {
-  fill: red;
+  fill: #FF8A58;
   z-index: 10;
 }
 
 .bar:hover {
-  fill: brown;
+  fill: #76ACDA;
+}
+
+.line {
+  fill: none;
+  stroke: #A6451D;
+  stroke-width: 2;
 }
 
 .axis {
@@ -633,10 +639,12 @@ fieldset {
   shape-rendering: crispEdges;
 }
 
-.y.axis .tick text {
+.y.axis .tick text,
+.y2.axis .tick text {
   cursor: pointer;
 }
-.y.axis .tick line {
+.y.axis .tick line,
+.y2.axis .tick line {
   opacity: 0;
   stroke: steelBlue;
   transition: opacity .3s;
