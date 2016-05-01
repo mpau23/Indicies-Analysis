@@ -88,7 +88,7 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     .attr('class', 'd3-tip')
                     .offset([-10, 0])
                     .html(function(d) {
-                        return " <div><strong>Variance: </strong><span style='color:red'>" + (d.variance * 100).toFixed(2) + "%</span></div><div><strong>High / Low Variance: </strong><span style='color:red'> " + (d.highLowVariance * 100).toFixed(2) + "%</span></div><div><strong>Open Date: </strong><span style='color:red'> " + d.open.date + " </span></div><div><strong>Open Price: </strong><span style='color:red'> " + d.expiry.open.toFixed(2) + " </span></div><div><strong>Expiry Date: </strong><span style='color:red'>" + d.expiry.date + " </span></div><div><strong>Expiry Price: </strong><span style='color:red'> " + d.expiry.close.toFixed(2) + " </span></div>";
+                        return " <div><strong>Variance: </strong><span style='color:red'>" + (d.variance * 100).toFixed(2) + "%</span></div><div><strong>High / Low Variance: </strong><span style='color:red'> " + (d.highLowVariance * 100).toFixed(2) + "%</span></div><div><strong>Open Date: </strong><span style='color:red'> " + d.open.date + " </span></div><div><strong>Open Price: </strong><span style='color:red'> " + d.open.open.toFixed(2) + " </span></div><div><strong>Expiry Date: </strong><span style='color:red'>" + d.expiry.date + " </span></div><div><strong>Expiry Price: </strong><span style='color:red'> " + d.expiry.close.toFixed(2) + " </span></div>";
                     });
 
                 svg.call(tip);
