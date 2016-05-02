@@ -3,7 +3,7 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
         renderMarketData();
 
-        $scope.marketKeys = ['SPY', 'FTSE', 'GDAXI'];
+        $scope.marketKeys = ['SPY', 'FTSE', 'GDAXI', 'SLV', 'QQQ', 'IWM'];
 
         $scope.changeDaysToExpiry = function() {
 
