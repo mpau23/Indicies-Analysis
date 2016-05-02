@@ -618,10 +618,6 @@ fieldset {
   z-index: 10;
 }
 
-.bar:hover {
-  fill: #76ACDA;
-}
-
 .line {
   fill: none;
   stroke: #A6451D;
@@ -658,10 +654,15 @@ fieldset {
   line-height: 1;
   font-weight: bold;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
+  background: steelblue;
   border-radius: 2px;
   font-size: 12px;
+}
+.d3-tip .title {
+  color: #fff;
+}
+.d3-tip .value {
+  color: #FF8A58;
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -671,7 +672,7 @@ fieldset {
   font-size: 10px;
   width: 100%;
   line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
+  color: steelblue;
   content: "\25BC";
   position: absolute;
   text-align: center;

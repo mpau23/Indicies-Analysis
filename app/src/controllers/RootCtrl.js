@@ -64,9 +64,32 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                         monthlyOption.expiry.high = expiryMarketData.high;
                         monthlyOption.expiry.low = expiryMarketData.low;
 
-                        monthlyOption.expiry.volatility = 0;
-                        if (expiryVolatilityData) {
-                            monthlyOption.expiry.volatility = expiryVolatilityData.open;
+                        var vExpiryDate = new Date(expiryDate.getTime());
+                        var vOpenDate = new Date(openDate.getTime());
+                        var vExpiryThreshold = 0;
+                        var vOpenThreshold = 0;
+
+                        while (!volatilityDataArray[vExpiryDate.getTime()] && (vExpiryThreshold <= threshold)) {
+                            vExpiryDate.addDays(-1);
+                            vExpiryThreshold++;
+                        }
+
+                        while (!volatilityDataArray[vOpenDate.getTime()] && (vOpenThreshold <= threshold)) {
+                            vOpenDate.addDays(-1);
+                            vOpenThreshold++;
+                        }
+
+                        if (vExpiryThreshold == 0) {
+                            monthlyOption.expiry.volatility = volatilityDataArray[vExpiryDate.getTime()].open;
+                        } else {
+                            monthlyOption.expiry.volatility = volatilityDataArray[vExpiryDate.getTime()].close;
+                        }
+
+                        if (vOpenThreshold == 0) {
+                            monthlyOption.open.volatility = volatilityDataArray[vOpenDate.getTime()].open;
+
+                        } else {
+                            monthlyOption.open.volatility = volatilityDataArray[vOpenDate.getTime()].close;
                         }
 
                         monthlyOption.open.date = openDate.toString("d-MMM-yyyy");
@@ -74,11 +97,6 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                         monthlyOption.open.close = openMarketData.close;
                         monthlyOption.open.high = openMarketData.high;
                         monthlyOption.open.low = openMarketData.low;
-
-                        monthlyOption.open.volatility = 0;
-                        if (openVolatilityData) {
-                            monthlyOption.open.volatility = openVolatilityData.open;
-                        }
 
                         monthlyOption.variance = (expiryMarketData.close - openMarketData.open) / openMarketData.open;
 
@@ -111,8 +129,6 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                             monthlyOption.highLowVariance =
                                 ((lowestLow - monthlyOption.open.open) / monthlyOption.open.open) - monthlyOption.variance;
                         }
-
-                        monthlyOption
 
                     } else {
                         console.log("No market data for: Expiry=" + expiryDate + ", Open=" + openDate);
