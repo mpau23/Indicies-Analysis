@@ -35,106 +35,19 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
                 angular.forEach(monthlyOptions, function(monthlyOption, key) {
 
-                    var expiryDate = Date.parse(monthlyOption.expiry.date);
-                    expiryDate.addDays(-closeBeforeExpiry);
-                    var openDate = Date.parse(monthlyOption.open.date);
-                    
+                    var expiryDate = getUpdatedDate(Date.parse(monthlyOption.expiry.date), -closeBeforeExpiry, marketDataArray, 5);
+                    var openDate = getUpdatedDate(Date.parse(monthlyOption.open.date), 0, marketDataArray, 5);
+
                     var expiryMarketData = marketDataArray[expiryDate.getTime()];
                     var openMarketData = marketDataArray[openDate.getTime()];
-                    var threshold = 5,
-                        expiryThreshold = 0,
-                        openThreshold = 0;
-
-                    while (!expiryMarketData && (expiryThreshold <= threshold)) {
-                        expiryDate.addDays(1);
-                        expiryMarketData = marketDataArray[expiryDate.getTime()];
-                        expiryThreshold++;
-                    }
-                    expiryThreshold = 0;
-
-                    while (!openMarketData && (openThreshold <= threshold)) {
-                        openDate.addDays(1);
-                        openMarketData = marketDataArray[openDate.getTime()];
-                        openThreshold++;
-                    }
-                    openThreshold = 0;
-
-                    var expiryVolatilityData = volatilityDataArray[expiryDate.getTime()];
-                    var openVolatilityData = volatilityDataArray[openDate.getTime()];
 
                     if (expiryMarketData && openMarketData) {
 
-                        monthlyOption.expiry.date = expiryDate.toString("d-MMM-yyyy");
-                        monthlyOption.expiry.open = expiryMarketData.open;
-                        monthlyOption.expiry.close = expiryMarketData.close;
-                        monthlyOption.expiry.high = expiryMarketData.high;
-                        monthlyOption.expiry.low = expiryMarketData.low;
-
-                        var vExpiryDate = new Date(expiryDate.getTime());
-                        var vOpenDate = new Date(openDate.getTime());
-                        var vExpiryThreshold = 0;
-                        var vOpenThreshold = 0;
-
-                        while (!volatilityDataArray[vExpiryDate.getTime()] && (vExpiryThreshold <= threshold)) {
-                            vExpiryDate.addDays(-1);
-                            vExpiryThreshold++;
-                        }
-
-                        while (!volatilityDataArray[vOpenDate.getTime()] && (vOpenThreshold <= threshold)) {
-                            vOpenDate.addDays(-1);
-                            vOpenThreshold++;
-                        }
-
-                        if (vExpiryThreshold == 0) {
-                            monthlyOption.expiry.volatility = volatilityDataArray[vExpiryDate.getTime()].open;
-                        } else {
-                            monthlyOption.expiry.volatility = volatilityDataArray[vExpiryDate.getTime()].close;
-                        }
-
-                        if (vOpenThreshold == 0) {
-                            monthlyOption.open.volatility = volatilityDataArray[vOpenDate.getTime()].open;
-
-                        } else {
-                            monthlyOption.open.volatility = volatilityDataArray[vOpenDate.getTime()].close;
-                        }
-
-                        monthlyOption.open.date = openDate.toString("d-MMM-yyyy");
-                        monthlyOption.open.open = openMarketData.open;
-                        monthlyOption.open.close = openMarketData.close;
-                        monthlyOption.open.high = openMarketData.high;
-                        monthlyOption.open.low = openMarketData.low;
-
-                        monthlyOption.variance = (expiryMarketData.close - openMarketData.open) / openMarketData.open;
-
-                        var highestHigh = monthlyOption.open.high;
-                        var lowestLow = monthlyOption.open.low;
-
-                        while (expiryDate > openDate) {
-
-                            openDate.addDays(1);
-
-                            if (marketDataArray[openDate.getTime()]) {
-
-                                if (marketDataArray[openDate.getTime()].high > highestHigh) {
-                                    highestHigh = marketDataArray[openDate.getTime()].high;
-                                }
-                                if (marketDataArray[openDate.getTime()].low < lowestLow) {
-                                    lowestLow = marketDataArray[openDate.getTime()].low;
-                                }
-                            }
-
-                            monthlyOption.highestHigh = highestHigh;
-                            monthlyOption.lowestLow = lowestLow;
-
-                        }
-
-                        if (monthlyOption.variance > 0) {
-                            monthlyOption.highLowVariance =
-                                ((highestHigh - monthlyOption.open.open) / monthlyOption.open.open) - monthlyOption.variance;
-                        } else {
-                            monthlyOption.highLowVariance =
-                                ((lowestLow - monthlyOption.open.open) / monthlyOption.open.open) - monthlyOption.variance;
-                        }
+                        setOptionMarketData(monthlyOption.expiry, expiryMarketData, expiryDate.toString("d-MMM-yyyy"));
+                        setOptionMarketData(monthlyOption.open, openMarketData, openDate.toString("d-MMM-yyyy"));
+                        setOptionVariance(monthlyOption, marketDataArray);
+                        setOptionVolatility(monthlyOption.expiry, volatilityDataArray, 5);
+                        setOptionVolatility(monthlyOption.open, volatilityDataArray, 5);
 
                     } else {
                         console.log("No market data for: Expiry=" + expiryDate + ", Open=" + openDate);
@@ -145,6 +58,81 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                 $scope.marketData = monthlyOptions;
 
             });
+        }
+
+        function getUpdatedDate(date, adjustByDays, marketData, threshold) {
+
+            var updatedDate = new Date(date.getTime());
+            updatedDate.addDays(adjustByDays);
+            var currentDateMarketData = marketData[updatedDate.getTime()];
+            var updatedThreshold = 0;
+            
+            while (!currentDateMarketData && (updatedThreshold <= threshold)) {
+                updatedDate.addDays(1);
+                currentDateMarketData = marketData[updatedDate.getTime()];
+                updatedThreshold++;
+            }
+            console.log(updatedDate);
+            return updatedDate;
+        }
+
+        function setOptionMarketData(optionDataForDate, marketDataForDate, date) {
+
+            optionDataForDate.date = date;
+            optionDataForDate.open = marketDataForDate.open;
+            optionDataForDate.close = marketDataForDate.close;
+            optionDataForDate.high = marketDataForDate.high;
+            optionDataForDate.low = marketDataForDate.low;
+        }
+
+        function setOptionVariance(monthlyOption, marketDataArray) {
+
+            var highestHigh = monthlyOption.open.high;
+            var lowestLow = monthlyOption.open.low;
+            var expiryDateForVariance = Date.parse(monthlyOption.expiry.date);
+            var openDateForVariance = Date.parse(monthlyOption.open.date);
+
+            while (expiryDateForVariance > openDateForVariance) {
+
+                openDateForVariance.addDays(1);
+
+                if (marketDataArray[openDateForVariance.getTime()]) {
+                    if (marketDataArray[openDateForVariance.getTime()].high > highestHigh) {
+                        highestHigh = marketDataArray[openDateForVariance.getTime()].high;
+                    }
+                    if (marketDataArray[openDateForVariance.getTime()].low < lowestLow) {
+                        lowestLow = marketDataArray[openDateForVariance.getTime()].low;
+                    }
+                }
+            }
+
+            monthlyOption.variance = (monthlyOption.expiry.close - monthlyOption.open.open) / monthlyOption.open.open;
+
+            if (monthlyOption.variance > 0) {
+                monthlyOption.highLowVariance =
+                    ((highestHigh - monthlyOption.open.open) / monthlyOption.open.open) - monthlyOption.variance;
+            } else {
+                monthlyOption.highLowVariance =
+                    ((lowestLow - monthlyOption.open.open) / monthlyOption.open.open) - monthlyOption.variance;
+            }
+        }
+
+        function setOptionVolatility(optionDataForDate, marketData, threshold) {
+
+            var volatilityDate = new Date.parse(optionDataForDate.date);
+            var updatedThreshold = 0;
+
+            while (!marketData[volatilityDate.getTime()] && (updatedThreshold <= threshold)) {
+                volatilityDate.addDays(-1);
+                updatedThreshold++;
+            }
+
+            if (updatedThreshold == 0) {
+                optionDataForDate.volatility = marketData[volatilityDate.getTime()].open;
+            } else {
+                optionDataForDate.volatility = marketData[volatilityDate.getTime()].close;
+            }
+
         }
 
     }
