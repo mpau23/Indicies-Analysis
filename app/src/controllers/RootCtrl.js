@@ -7,13 +7,17 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
         $scope.changeDaysToExpiry = function() {
 
-            renderMarketData($scope.daysToExpiry, $scope.marketKey);
+            renderMarketData($scope.openBeforeExpiry, $scope.marketKey, $scope.closeBeforeExpiry);
         };
 
-        function renderMarketData(daysToExpiry, marketKey) {
+        function renderMarketData(daysToExpiry, marketKey, closeBeforeExpiry) {
 
             if (!daysToExpiry) {
                 daysToExpiry = 15;
+            }
+
+            if (!closeBeforeExpiry) {
+                closeBeforeExpiry = 0;
             }
 
             if (!marketKey) {
@@ -32,7 +36,9 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                 angular.forEach(monthlyOptions, function(monthlyOption, key) {
 
                     var expiryDate = Date.parse(monthlyOption.expiry.date);
+                    expiryDate.addDays(-closeBeforeExpiry);
                     var openDate = Date.parse(monthlyOption.open.date);
+                    
                     var expiryMarketData = marketDataArray[expiryDate.getTime()];
                     var openMarketData = marketDataArray[openDate.getTime()];
                     var threshold = 5,

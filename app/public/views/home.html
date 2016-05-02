@@ -6,12 +6,20 @@
             <option value="{{market}}" ng-repeat="market in marketKeys">{{market}}</option>
         </select>
     </fieldset>
+    
     <fieldset>
-        <label for="dte">Days to expiry: </label>
-        <input type="text" id="dte" ng-model="daysToExpiry" placeholder="Number of days">
+        <label for="openBeforeExpiry">Open (days before expiry): </label>
+        <input type="text" id="openBeforeExpiry" ng-model="openBeforeExpiry" placeholder="15">
     </fieldset>
+
+    <fieldset>
+        <label for="closeBeforeExpiry">Close (days before expiry): </label>
+        <input type="text" id="closeBeforeExpiry" ng-model="closeBeforeExpiry" placeholder="0">
+    </fieldset>
+    
     <fieldset>
         <input type="button" id="updateButton" ng-click="changeDaysToExpiry()" value="Update">
     </fieldset>
 </form>
+
 <div indicies-chart-directive chart-data="marketData"></div>
