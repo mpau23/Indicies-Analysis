@@ -72,7 +72,6 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                 currentDateMarketData = marketData[updatedDate.getTime()];
                 updatedThreshold++;
             }
-            console.log(updatedDate);
             return updatedDate;
         }
 
