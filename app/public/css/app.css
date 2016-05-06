@@ -607,6 +607,9 @@ fieldset {
   width: 100%;
   float: right;
 }
+.graph-toggle input[type="text"] {
+  width: 75px;
+}
 
 .variance {
   fill: #4682B4;

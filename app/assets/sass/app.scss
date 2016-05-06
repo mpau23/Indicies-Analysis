@@ -64,6 +64,10 @@ fieldset {
     margin-top: 20px;
     width: 100%;
     float: right;
+
+    input[type="text"] {
+        width: 75px;
+    }
 }
 
 .variance {
@@ -153,3 +157,4 @@ fieldset {
     top: 100%;
     left: 0;
 }
+
