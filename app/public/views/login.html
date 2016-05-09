@@ -1,0 +1,8 @@
+<div class="login-form-container">
+    <form name="form" ng-submit="tryLogin()" role="form">
+        <input type="text" id="login" ng-model="login" />
+        <input type="password" id="password" ng-model="password" />
+        <input type="submit" id="submit" value="login" />
+    </form>
+    <span ng-show="formError" class="login-error">Incorrect username or password</span>
+</div>

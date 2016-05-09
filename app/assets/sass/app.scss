@@ -158,3 +158,18 @@ fieldset {
     left: 0;
 }
 
+.login-form-container {
+    width: 50%;
+    max-width: 500px;
+    margin: 80px auto;
+
+    input {
+        width: 100%;
+        padding: 5px;
+        margin: 5px 0;
+    }
+
+    .login-error {
+        color: red;
+    }
+}

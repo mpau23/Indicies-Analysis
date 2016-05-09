@@ -6,6 +6,7 @@ var serveStatic = require('serve-static');
 module.exports = function(app) {
 
     require('./routes/MarketDataRoutes')(app);
+    require('./routes/LoginRoutes')(app);
 
     app.use(compression());
 
