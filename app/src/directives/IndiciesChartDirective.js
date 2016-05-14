@@ -16,10 +16,10 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     top: 20,
                     right: 40,
                     bottom: 30,
-                    left: 40
+                    left: 25
                 },
-                width = 1280 - margin.left - margin.right,
-                height = 700 - margin.top - margin.bottom;
+                width = 1040 - margin.left - margin.right,
+                height = 600 - margin.top - margin.bottom;
 
             var svg = d3.select(".chart")
                 .attr("width", width + margin.left + margin.right)
@@ -31,17 +31,19 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
             function setChartParameters() {
 
                 x = d3.scale.ordinal()
-                    .rangeRoundBands([0, width], .3);
+                    .domain(indiciesDataToPlot.map(function(d) {
+                        return d.expiry.date;
+                    }))
+                    .rangeBands([0, width], 0.3, 1);
 
                 xAxis = d3.svg.axis()
                     .scale(x)
                     .orient("bottom");
 
-                x.domain(indiciesDataToPlot.map(function(d) {
-                    return d.expiry.date;
-                }));
-
                 y = d3.scale.linear()
+                    .domain(d3.extent(indiciesDataToPlot, function(d) {
+                        return d.variance + d.highLowVariance;
+                    }))
                     .range([height, 0]);
 
                 yAxis = d3.svg.axis()
@@ -50,11 +52,15 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     .ticks(20, "%")
                     .tickSize(-width, 0, 0);
 
-                y.domain(d3.extent(indiciesDataToPlot, function(d) {
-                    return d.variance + d.highLowVariance;
-                })).nice();
-
                 y2 = d3.scale.linear()
+                    .domain(d3.extent(indiciesDataToPlot, function(d) {
+                        if (d.open.volatility) {
+                            return d.open.volatility / 100;
+                        } else {
+                            return 0;
+                        }
+                    }))
+                    .nice()
                     .range([y(0), 0]);
 
                 y2Axis = d3.svg.axis()
@@ -62,14 +68,6 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     .orient("right")
                     .ticks(8, "%")
                     .tickSize(-width, 0, 0);
-
-                y2.domain(d3.extent(indiciesDataToPlot, function(d) {
-                    if (d.open.volatility) {
-                        return d.open.volatility / 100;
-                    } else {
-                        return 0;
-                    }
-                })).nice();
 
                 line = d3.svg.line()
                     .x(function(d) {
@@ -92,7 +90,6 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     });
 
                 svg.call(tip);
-
             }
 
             function drawChart(isRedrawing) {

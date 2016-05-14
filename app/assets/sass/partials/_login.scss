@@ -1,0 +1,18 @@
+.login-form-container {
+    @include pre(3);
+    @include span(6);
+    @include post(3 last);
+    fieldset {
+        @include span(full);
+        label {
+            @include span(full);
+        }
+        input,
+        select {
+            @include span(full);
+        }
+    }
+    .login-error {
+        color: red;
+    }
+}

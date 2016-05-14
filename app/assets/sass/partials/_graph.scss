@@ -1,0 +1,79 @@
+.graph-container {
+    @include span(9);
+    .graph-panel {
+        @include span(full);
+    }
+}
+
+.axis {
+    font-size: 10px;
+    path,
+    line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+    .tick {
+        text {
+            cursor: pointer;
+        }
+        line {
+            opacity: 0;
+            stroke: $light-blue;
+            transition: opacity .3s;
+        }
+    }
+    &.x {
+        text {
+            display: none;
+        }
+    }
+}
+
+rect {
+    &.variance {
+        fill: $deep-blue;
+        z-index: 20;
+    }
+    &.highlow {
+        fill: $orange;
+        z-index: 10;
+    }
+}
+
+.line {
+    fill: none;
+    stroke: $green;
+    stroke-width: 1;
+}
+
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(70, 130, 180, 1);
+    border-radius: 2px;
+    font-size: 12px;
+    .title {
+        color: #fff;
+    }
+    .value {
+        color: #FF8A58;
+    }
+    &:after {
+        box-sizing: border-box;
+        display: inline;
+        font-size: 10px;
+        width: 100%;
+        line-height: 1;
+        color: rgba(70, 130, 180, 1);
+        content: "\25BC";
+        position: absolute;
+        text-align: center;
+    }
+    &.n:after {
+        margin: -1px 0 0 0;
+        top: 100%;
+        left: 0;
+    }
+}

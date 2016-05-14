@@ -1,0 +1,19 @@
+.dials-container {
+    @include span(3 last);
+    .dials-panel {
+        @include span(full);
+    }
+    fieldset {
+        @include span(full);
+        label {
+            @include span(8);
+        }
+        input,
+        select {
+            @include span(4 last);
+        }
+        input[type="button"] {
+            @include span(full);
+        }
+    }
+}

@@ -1,10 +1,21 @@
 <div class="login-form-container">
-    <form name="form" ng-submit="tryLogin()" role="form">
-        <label for="login">Username</label>
-        <input type="text" id="login" ng-model="login" />
-        <label for="password">Password</label>
-        <input type="password" id="password" ng-model="password" />
-        <input type="submit" id="submit" value="login" />
-    </form>
-    <span ng-show="formError" class="login-error">Incorrect username or password</span>
+    <div class="panel dial-panel">
+        <div class="panel-body">
+            <h4>Login</h4>
+            <form name="form" ng-submit="tryLogin()" role="form">
+                <fieldset>
+                    <label for="login">Username</label>
+                    <input class="input-text" type="text" id="login" ng-model="login" />
+                </fieldset>
+                <fieldset>
+                    <label for="password">Password</label>
+                    <input class="input-text" type="password" id="password" ng-model="password" />
+                </fieldset>
+                <fieldset>
+                    <input class="btn blue" type="submit" id="submit" value="login" />
+                </fieldset>
+            </form>
+            <span ng-show="formError" class="login-error">Incorrect username or password</span>
+        </div>
+    </div>
 </div>

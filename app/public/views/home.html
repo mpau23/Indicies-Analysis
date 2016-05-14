@@ -1,32 +1,46 @@
-<form class="graph-toggle">
-    <fieldset>
-        <label for="market">Market: </label>
-        <select id="market" ng-model="marketKey">
-            <option value="" disabled>Market (Key)</option>
-            <option value="{{market}}" ng-repeat="market in marketKeys">{{market}}</option>
-        </select>
-    </fieldset>
-    <fieldset>
-        <label for="optionType">Option Type: </label>
-        <select id="optionType" ng-model="optionType">
-            <option value="" disabled>Option Type</option>
-            <option value="{{type}}" ng-repeat="type in optionTypes">{{type}}</option>
-        </select>
-    </fieldset>
-    <fieldset>
-        <label for="openBeforeExpiry">Open (days before expiry): </label>
-        <input type="text" id="openBeforeExpiry" ng-model="openBeforeExpiry" placeholder="15">
-    </fieldset>
-    <fieldset>
-        <label for="closeBeforeExpiry">Close (days before expiry): </label>
-        <input type="text" id="closeBeforeExpiry" ng-model="closeBeforeExpiry" placeholder="0">
-    </fieldset>
-    <fieldset>
-        <label for="startYear">Start Year: </label>
-        <input type="text" id="startYear" ng-model="startYear" placeholder="2000">
-    </fieldset>
-    <fieldset>
-        <input type="button" id="updateButton" ng-click="changeDaysToExpiry()" value="Update">
-    </fieldset>
-</form>
-<div indicies-chart-directive chart-data="marketData"></div>
+<div class="graph-container">
+    <div class="panel graph-panel">
+        <div class="panel-body">
+            <h4>Graph</h4>
+            <div indicies-chart-directive chart-data="marketData"></div>
+        </div>
+    </div>
+</div>
+<div class="dials-container">
+    <div class="panel dial-panel">
+        <div class="panel-body">
+            <h4>Dials</h4>
+            <form class="graph-toggle">
+                <fieldset>
+                    <label for="market">Market: </label>
+                    <select id="market" ng-model="marketKey">
+                        <option value="" disabled>Market (Key)</option>
+                        <option value="{{market}}" ng-repeat="market in marketKeys">{{market}}</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label for="optionType">Option Type: </label>
+                    <select id="optionType" ng-model="optionType">
+                        <option value="" disabled>Option Type</option>
+                        <option value="{{type}}" ng-repeat="type in optionTypes">{{type}}</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label for="openBeforeExpiry">Open (days before expiry): </label>
+                    <input class="input-text" type="text" id="openBeforeExpiry" ng-model="openBeforeExpiry" placeholder="15">
+                </fieldset>
+                <fieldset>
+                    <label for="closeBeforeExpiry">Close (days before expiry): </label>
+                    <input class="input-text" type="text" id="closeBeforeExpiry" ng-model="closeBeforeExpiry" placeholder="0">
+                </fieldset>
+                <fieldset>
+                    <label for="startYear">Start Year: </label>
+                    <input class="input-text" type="text" id="startYear" ng-model="startYear" placeholder="2000">
+                </fieldset>
+                <fieldset>
+                    <input class="btn blue" type="button" id="updateButton" ng-click="changeDaysToExpiry()" value="Update">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

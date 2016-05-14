@@ -542,13 +542,275 @@ th {
   padding: 0;
 }
 
-html {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+h3 {
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.5;
+  font-weight: normal;
+}
+
+h4 {
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+p,
+label {
+  padding: 0;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: normal;
+}
+
+fieldset {
+  border: none;
+  float: left;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.input-text {
+  padding: 6px 12px;
+  font-size: 14px;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.btn {
+  padding: 0.85em 1.1em;
+  border-radius: 0.2em;
+  box-shadow: 0px 1px 1.5px 1px rgba(0, 0, 0, 0.12);
+  line-height: 1.5;
+  border: none;
+}
+.btn.red {
+  color: #fff;
+  background-color: #E9422E;
+}
+.btn.blue {
+  color: #fff;
+  background-color: #5BC0DE;
+}
+
+.panel {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  float: left;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.panel .panel-body {
+  padding: 15px;
+  overflow: scroll;
+}
+
+.header-container {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.header-container:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
+.nav-top {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0 10px;
+  height: 60px;
+  position: fixed;
+  color: #626262;
+  background: #fff;
+  box-shadow: 0 1px 8px 0 rgba(51, 51, 51, 0.1);
+}
+.nav-top .nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nav-top .nav-left {
+  float: left;
+}
+.nav-top .nav-left .logo {
+  padding: 20px 10px;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000;
+}
+.nav-top .nav-right {
+  float: right;
+}
+.nav-top .nav-right .name {
+  padding: 20px 10px;
+  line-height: 20px;
+}
+
+.graph-container {
+  width: 74.57627%;
+  float: left;
+  margin-right: 1.69492%;
+}
+.graph-container .graph-panel {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.axis {
+  font-size: 10px;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.axis .tick text {
+  cursor: pointer;
+}
+.axis .tick line {
+  opacity: 0;
+  stroke: #5BC0DE;
+  transition: opacity .3s;
+}
+.axis.x text {
+  display: none;
+}
+
+rect.variance {
+  fill: #3980B5;
+  z-index: 20;
+}
+rect.highlow {
+  fill: #F18D05;
+  z-index: 10;
+}
+
+.line {
+  fill: none;
+  stroke: #61AE24;
+  stroke-width: 1;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: steelblue;
+  border-radius: 2px;
+  font-size: 12px;
+}
+.d3-tip .title {
+  color: #fff;
+}
+.d3-tip .value {
+  color: #FF8A58;
+}
+.d3-tip:after {
   box-sizing: border-box;
-  font-weight: 100;
-  letter-spacing: 0.01em;
-  font-family: sans-serif;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: steelblue;
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.login-form-container {
+  margin-left: 25.42373%;
+  width: 49.15254%;
+  float: left;
+  margin-right: 1.69492%;
+  margin-right: 25.42373%;
+}
+.login-form-container fieldset {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+.login-form-container fieldset label {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+.login-form-container fieldset input,
+.login-form-container fieldset select {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+.login-form-container .login-error {
+  color: red;
+}
+
+.dials-container {
+  width: 23.72881%;
+  float: right;
+  margin-right: 0;
+}
+.dials-container .dials-panel {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+.dials-container fieldset {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+.dials-container fieldset label {
+  width: 66.10169%;
+  float: left;
+  margin-right: 1.69492%;
+}
+.dials-container fieldset input,
+.dials-container fieldset select {
+  width: 32.20339%;
+  float: right;
+  margin-right: 0;
+}
+.dials-container fieldset input[type="button"] {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
 }
 
 *,
@@ -568,136 +830,21 @@ html {
 }
 
 body {
-  min-width: 320px;
-  font-size: 16px;
-  position: relative;
-  overflow-x: hidden;
+  color: #565656;
+  background: #E9EDF2;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-.overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  top: 0;
+.main-content {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 0 10px;
+  padding: 60px 0 0;
 }
-
-h1 {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 2rem;
-  color: #fff;
-  font-weight: normal;
-}
-
-header {
-  background-color: steelblue;
-}
-header h1 {
-  text-align: center;
-}
-
-fieldset {
-  border: none;
-  float: left;
-}
-
-.graph-toggle {
-  margin-top: 20px;
-  width: 100%;
-  float: right;
-}
-.graph-toggle input[type="text"] {
-  width: 75px;
-}
-
-.variance {
-  fill: #4682B4;
-  z-index: 20;
-}
-
-.highlow {
-  fill: #FF8A58;
-  z-index: 10;
-}
-
-.line {
-  fill: none;
-  stroke: #A6451D;
-  stroke-width: 1;
-}
-
-.axis {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.y.axis .tick text,
-.y2.axis .tick text {
-  cursor: pointer;
-}
-.y.axis .tick line,
-.y2.axis .tick line {
-  opacity: 0;
-  stroke: steelBlue;
-  transition: opacity .3s;
-}
-
-.x.axis .tick text {
-  display: none;
-}
-
-.d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: steelblue;
-  border-radius: 2px;
-  font-size: 12px;
-}
-.d3-tip .title {
-  color: #fff;
-}
-.d3-tip .value {
-  color: #FF8A58;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: steelblue;
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
-
-/* Style northward tooltips differently */
-.d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-}
-
-.login-form-container {
-  width: 50%;
-  max-width: 500px;
-  margin: 80px auto;
-}
-.login-form-container input {
-  width: 100%;
-  padding: 5px;
-  margin: 5px 0;
-}
-.login-form-container .login-error {
-  color: red;
+.main-content:after {
+  content: " ";
+  display: block;
+  clear: both;
 }
