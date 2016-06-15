@@ -3,13 +3,13 @@
   "description": "App",
   "dependencies": {
     "angular": "~1.4.3",
-    "jquery": "~2.1.4",
-    "normalize.css": "~3.0.3",
     "ui-router": "~0.2.15",
-    "moment": "~2.10.6",
     "angular-local-storage": "~0.2.3",
     "angular-cookies": "~1.4.7",
-    "pure": "~0.6.0"
+    "jquery": "~2.1.4",
+    "d3": "~3.5.17",
+    "d3-tip": "~0.6.7",
+    "datejs": "~1.0.0-rc3"
   },
   "overrides": {
     "angular": {
@@ -27,8 +27,14 @@
     "angular-cookies": {
       "main": "*.min.js"
     },
-    "pure": {
-      "main": "pure-min.css"
+    "d3": {
+      "main": "*.min.js"
+    },
+    "d3-tip": {
+      "main": "*.js"
+    },
+    "datejs": {
+      "main": "build/production/date-en-GB.min.js"
     }
   }
 }
