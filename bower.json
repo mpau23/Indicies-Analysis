@@ -9,7 +9,8 @@
     "jquery": "~2.1.4",
     "d3": "~3.5.17",
     "d3-tip": "~0.6.7",
-    "datejs": "~1.0.0-rc3"
+    "datejs": "~1.0.0-rc3",
+    "angular-bootstrap": "~1.3.3"
   },
   "overrides": {
     "angular": {
@@ -35,6 +36,9 @@
     },
     "datejs": {
       "main": "build/production/date-en-GB.min.js"
+    },
+    "angular-bootstrap" : {
+      "main": "ui-bootstrap-tpls.min.js"
     }
   }
 }
