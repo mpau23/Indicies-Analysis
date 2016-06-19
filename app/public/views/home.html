@@ -48,7 +48,8 @@
     <div class="panel graph-panel">
         <div class="panel-body">
             <h4>Graph</h4>
-            <div indicies-chart-directive chart-data="marketData"></div>
+            <div class="d3-container" indicies-chart-directive chart-data="marketData" ng-class="loading ? 'loading' : ''"></div>
+            <img class="gears" src="images/gears.svg" alt="Loading" ng-class="loading ? 'loading' : ''">
         </div>
     </div>
 </div>

@@ -9,13 +9,14 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
         $scope.optionTypes = ["weekly", "monthly"];
         $scope.optionType = { "value": $scope.optionTypes[1] };
 
+        $scope.loading = false;
+
         $scope.changeDaysToExpiry = function() {
-            console.log($scope.marketKey.value);
-            console.log($scope.optionType.value);
             renderMarketData($scope.marketKey.value, $scope.openBeforeExpiry, $scope.closeBeforeExpiry, $scope.optionType.value, $scope.startYear);
         };
 
         function renderMarketData(marketKey, daysToExpiry, closeBeforeExpiry, optionType, startYear) {
+            $scope.loading = true;
 
             if (!marketKey) {
                 marketKey = "SPY";
@@ -43,6 +44,8 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
             $q.all([marketDataPromise, volatilityDataPromise]).then(function(response) {
 
+$scope.loading = false;
+
                 var marketData = response[0];
                 var volatilityData = response[1];
 
@@ -51,6 +54,7 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
                 }
 
                 $scope.marketData = options;
+                
 
             });
         }

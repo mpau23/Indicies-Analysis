@@ -644,12 +644,30 @@ ul {
   float: left;
   margin-left: 0;
   margin-right: 0;
+  position: relative;
 }
 .graph-container .chart {
   width: 100%;
   float: left;
   margin-left: 0;
   margin-right: 0;
+}
+
+.d3-container.loading {
+  opacity: 0.3;
+}
+
+.gears {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none;
+}
+.gears.loading {
+  display: block;
 }
 
 .axis {
