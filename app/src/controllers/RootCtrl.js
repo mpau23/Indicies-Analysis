@@ -3,7 +3,7 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
         renderMarketData("SPY", 15, 0, "monthly", 2000);
 
-        $scope.marketKeys = ['SPY', 'FTSE', 'GDAXI', 'SLV', 'QQQ', 'IWM'];
+        $scope.marketKeys = ['SPY', 'FTSE', 'DAX', 'SLV', 'QQQ', 'IWM'];
         $scope.marketKey = { "value": $scope.marketKeys[0] };
 
         $scope.optionTypes = ["weekly", "monthly"];
