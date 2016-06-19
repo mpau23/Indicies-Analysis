@@ -2,16 +2,15 @@
     @include pre(3);
     @include span(6);
     @include post(3 last);
-    fieldset {
-        @include span(full);
-        label {
-            @include span(full);
-        }
-        input,
-        select {
-            @include span(full);
-        }
+
+    .form-control {
+        margin: 10px 0;
     }
+
+    input[type="submit"] {
+        float:right;
+    } 
+
     .login-error {
         color: red;
     }

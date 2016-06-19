@@ -1,11 +1,3 @@
-<div class="graph-container">
-    <div class="panel graph-panel">
-        <div class="panel-body">
-            <h4>Graph</h4>
-            <div indicies-chart-directive chart-data="marketData"></div>
-        </div>
-    </div>
-</div>
 <div class="dials-container">
     <div class="panel dial-panel">
         <div class="panel-body">
@@ -13,34 +5,50 @@
             <form class="graph-toggle">
                 <fieldset>
                     <label for="market">Market: </label>
-                    <select id="market" ng-model="marketKey">
-                        <option value="" disabled>Market (Key)</option>
-                        <option value="{{market}}" ng-repeat="market in marketKeys">{{market}}</option>
-                    </select>
+                    <ui-select ng-model="marketKey.value" search-enabled="false" append-to-body="true">
+                        <ui-select-match>
+                            <span ng-bind="$select.selected"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="market in marketKeys" position="down">
+                            <span ng-bind="market"></span>
+                        </ui-select-choices>
+                    </ui-select>
                 </fieldset>
                 <fieldset>
                     <label for="optionType">Option Type: </label>
-                    <select id="optionType" ng-model="optionType">
-                        <option value="" disabled>Option Type</option>
-                        <option value="{{type}}" ng-repeat="type in optionTypes">{{type}}</option>
-                    </select>
+                    <ui-select ng-model="optionType.value" search-enabled="false" append-to-body="true">
+                        <ui-select-match>
+                            <span ng-bind="$select.selected"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="type in optionTypes">
+                            <span ng-bind="type"></span>
+                        </ui-select-choices>
+                    </ui-select>
                 </fieldset>
                 <fieldset>
-                    <label for="openBeforeExpiry">Open (days before expiry): </label>
-                    <input class="input-text" type="text" id="openBeforeExpiry" ng-model="openBeforeExpiry" placeholder="15">
+                    <label for="openBeforeExpiry">DBE (Open): </label>
+                    <input class="form-control" type="text" id="openBeforeExpiry" ng-model="openBeforeExpiry" placeholder="15">
                 </fieldset>
                 <fieldset>
-                    <label for="closeBeforeExpiry">Close (days before expiry): </label>
-                    <input class="input-text" type="text" id="closeBeforeExpiry" ng-model="closeBeforeExpiry" placeholder="0">
+                    <label for="closeBeforeExpiry">DBE (Close): </label>
+                    <input class="form-control" type="text" id="closeBeforeExpiry" ng-model="closeBeforeExpiry" placeholder="0">
                 </fieldset>
                 <fieldset>
                     <label for="startYear">Start Year: </label>
-                    <input class="input-text" type="text" id="startYear" ng-model="startYear" placeholder="2000">
+                    <input class="form-control" type="text" id="startYear" ng-model="startYear" placeholder="2000">
                 </fieldset>
                 <fieldset>
-                    <input class="btn blue" type="button" id="updateButton" ng-click="changeDaysToExpiry()" value="Update">
+                    <input class="btn btn-success" type="button" id="updateButton" ng-click="changeDaysToExpiry()" value="Update">
                 </fieldset>
             </form>
+        </div>
+    </div>
+</div>
+<div class="graph-container">
+    <div class="panel graph-panel">
+        <div class="panel-body">
+            <h4>Graph</h4>
+            <div indicies-chart-directive chart-data="marketData"></div>
         </div>
     </div>
 </div>

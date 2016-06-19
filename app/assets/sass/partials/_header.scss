@@ -1,34 +1,33 @@
 .header-container {
     @include container();
-}
-
-.nav-top {
     @include span(full);
-    padding: 0 10px;
+    padding: 20px 10px;
     height: 60px;
     position: fixed;
     color: #626262;
     background: #fff;
     box-shadow: 0 1px 8px 0 rgba(51, 51, 51, .1);
-    .nav {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+    z-index: 100;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
+}
+
+.nav-left {
+    float: left;
+    .logo {
+        font-size: 16px;
+        color: #000;
     }
-    .nav-left {
-        float: left;
-        .logo {
-            padding: 20px 10px;
-            font-size: 16px;
-            line-height: 20px;
-            color: #000;
-        }
-    }
-    .nav-right {
-        float: right;
-        .name {
-            padding: 20px 10px;
-            line-height: 20px;
-        }
+}
+
+.nav-right {
+    float: right;
+    a {
+        padding: 0 0 0 5px;
     }
 }

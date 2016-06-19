@@ -1,8 +1,5 @@
 .graph-container {
-    @include span(9);
-    .graph-panel {
-        @include span(full);
-    }
+    @include span(full);
 }
 
 .axis {

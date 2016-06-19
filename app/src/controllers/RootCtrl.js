@@ -4,11 +4,15 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
         renderMarketData("SPY", 15, 0, "monthly", 2000);
 
         $scope.marketKeys = ['SPY', 'FTSE', 'GDAXI', 'SLV', 'QQQ', 'IWM'];
+        $scope.marketKey = { "value": $scope.marketKeys[0] };
 
         $scope.optionTypes = ["weekly", "monthly"];
+        $scope.optionType = { "value": $scope.optionTypes[1] };
 
         $scope.changeDaysToExpiry = function() {
-            renderMarketData($scope.marketKey, $scope.openBeforeExpiry, $scope.closeBeforeExpiry, $scope.optionType, $scope.startYear);
+            console.log($scope.marketKey.value);
+            console.log($scope.optionType.value);
+            renderMarketData($scope.marketKey.value, $scope.openBeforeExpiry, $scope.closeBeforeExpiry, $scope.optionType.value, $scope.startYear);
         };
 
         function renderMarketData(marketKey, daysToExpiry, closeBeforeExpiry, optionType, startYear) {
@@ -23,11 +27,11 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
             if (!closeBeforeExpiry) {
                 closeBeforeExpiry = 0;
-            }            
+            }
 
             if (!optionType) {
                 optionType = "monthly";
-            }            
+            }
 
             if (!startYear) {
                 startYear = 2000;
