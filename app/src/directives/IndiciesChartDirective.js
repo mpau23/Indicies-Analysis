@@ -18,7 +18,7 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     bottom: 30,
                     left: 25
                 },
-                width = 1040 - margin.left - margin.right,
+                width = parseInt(d3.select('.chart').style('width'), 10) - margin.left - margin.right,
                 height = 600 - margin.top - margin.bottom;
 
             var svg = d3.select(".chart")
@@ -60,7 +60,6 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                             return 0;
                         }
                     }))
-                    .nice()
                     .range([y(0), 0]);
 
                 y2Axis = d3.svg.axis()
@@ -99,7 +98,9 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                 if (isRedrawing) {
                     svg.selectAll("g.y").call(yAxis);
 
-                    svg.selectAll("g.y2").call(y2Axis);
+                    svg.selectAll("g.y2")
+                        .attr("transform", "translate(" + width + " ,0)")
+                        .call(y2Axis);
 
                     svg.selectAll("g.x")
                         .attr("transform", "translate(0," + y(0) + ")")
@@ -203,6 +204,13 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                 }
 
             });
+
+            d3.select(window).on('resize', resize);
+
+            function resize() {
+                width = parseInt(d3.select('.chart').style('width'), 10) - margin.left - margin.right;
+                drawChart(true);
+            }
 
         }
     };

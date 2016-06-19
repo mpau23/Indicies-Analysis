@@ -645,6 +645,12 @@ ul {
   margin-left: 0;
   margin-right: 0;
 }
+.graph-container .chart {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
 
 .axis {
   font-size: 10px;

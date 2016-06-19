@@ -1,5 +1,9 @@
 .graph-container {
     @include span(full);
+
+    .chart {
+        @include span(full);
+    }
 }
 
 .axis {
