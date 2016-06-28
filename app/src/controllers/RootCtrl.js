@@ -3,7 +3,7 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
         renderMarketData("SPY", 15, 0, "monthly", 2000);
 
-        $scope.marketKeys = ['SPY', 'FTSE', 'DAX', 'SLV', 'QQQ', 'IWM'];
+        $scope.marketKeys = ['SPY', 'FTSE', 'DAX', 'SLV', 'QQQ', 'IWM', 'GDX'];
         $scope.marketKey = { "value": $scope.marketKeys[0] };
 
         $scope.optionTypes = ["weekly", "monthly"];
@@ -44,7 +44,7 @@ IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
             $q.all([marketDataPromise, volatilityDataPromise]).then(function(response) {
 
-$scope.loading = false;
+                $scope.loading = false;
 
                 var marketData = response[0];
                 var volatilityData = response[1];
@@ -54,7 +54,7 @@ $scope.loading = false;
                 }
 
                 $scope.marketData = options;
-                
+
 
             });
         }
