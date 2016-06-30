@@ -2,6 +2,8 @@ var path = require('path');
 var express = require('express');
 var compression = require('compression');
 var serveStatic = require('serve-static');
+require('datejs');
+Date.i18n.setLanguage("en-GB");
 
 module.exports = function(app) {
 

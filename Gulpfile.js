@@ -7,7 +7,8 @@ var gulp = require('gulp'),
     compass = require('gulp-compass'),
     path = require('path'),
     minifyCss = require('gulp-minify-css'),
-    gutil = require('gulp-util');
+    gutil = require('gulp-util')
+    jsonminify = require('gulp-jsonminify');
 
 
 gulp.task('bower', function() {
@@ -61,6 +62,12 @@ gulp.task('appImage', function() {
             extname: '.min.svg'
         }))
         .pipe(gulp.dest('./app/public/images/'));
+});
+
+gulp.task('appJson', function() {
+    return gulp.src('./app/express/data/*.json')
+        .pipe(jsonminify())
+        .pipe(gulp.dest('./app/express/data/'));
 });
 
 gulp.task('watch', ['default'], function() {

@@ -1,62 +1,51 @@
-IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataService', 'CalendarDataService', 'OptionCalculationService',
-    function($scope, $http, $q, MarketDataService, CalendarDataService, OptionCalculationService) {
+IndiciesAnalysis.controller('RootCtrl', ['$scope', '$http', '$q', 'MarketDataService', function($scope, $http, $q, MarketDataService) {
 
-        renderMarketData("SPY", 15, 0, "monthly", 2000);
+    $scope.marketKeys = ['SPY', 'FTSE', 'DAX', 'SLV', 'QQQ', 'IWM', 'GDX'];
+    $scope.marketKey = { "value": $scope.marketKeys[0] };
 
-        $scope.marketKeys = ['SPY', 'FTSE', 'DAX', 'SLV', 'QQQ', 'IWM', 'GDX'];
-        $scope.marketKey = { "value": $scope.marketKeys[0] };
+    $scope.optionTypes = ["weekly", "monthly"];
+    $scope.optionType = { "value": $scope.optionTypes[1] };
 
-        $scope.optionTypes = ["weekly", "monthly"];
-        $scope.optionType = { "value": $scope.optionTypes[1] };
+    $scope.loading = false;
 
-        $scope.loading = false;
+    renderMarketData("SPY", 15, 0, "monthly", 2000);
 
-        $scope.changeDaysToExpiry = function() {
-            renderMarketData($scope.marketKey.value, $scope.openBeforeExpiry, $scope.closeBeforeExpiry, $scope.optionType.value, $scope.startYear);
-        };
+    $scope.changeDaysToExpiry = function() {
+        renderMarketData($scope.marketKey.value, $scope.openBeforeExpiry, $scope.closeBeforeExpiry, $scope.optionType.value, $scope.startYear);
+    };
 
-        function renderMarketData(marketKey, daysToExpiry, closeBeforeExpiry, optionType, startYear) {
-            $scope.loading = true;
+    function renderMarketData(marketKey, daysToExpiry, closeBeforeExpiry, optionType, startYear) {
+        $scope.loading = true;
 
-            if (!marketKey) {
-                marketKey = "SPY";
-            }
-
-            if (!daysToExpiry) {
-                daysToExpiry = 15;
-            }
-
-            if (!closeBeforeExpiry) {
-                closeBeforeExpiry = 0;
-            }
-
-            if (!optionType) {
-                optionType = "monthly";
-            }
-
-            if (!startYear) {
-                startYear = 2000;
-            }
-
-            var marketDataPromise = MarketDataService.getDailyMarketData(startYear, marketKey);
-            var volatilityDataPromise = MarketDataService.getVolatilityData(startYear);
-            var options = CalendarDataService.getOptions(daysToExpiry, startYear, optionType);
-
-            $q.all([marketDataPromise, volatilityDataPromise]).then(function(response) {
-
-                $scope.loading = false;
-
-                var marketData = response[0];
-                var volatilityData = response[1];
-
-                if (marketData && volatilityData) {
-                    var optionData = OptionCalculationService.getOptionData(marketData, volatilityData, options, closeBeforeExpiry);
-                }
-
-                $scope.marketData = options;
-
-
-            });
+        if (!marketKey) {
+            marketKey = "SPY";
         }
+
+        if (!daysToExpiry) {
+            daysToExpiry = 15;
+        }
+
+        if (!closeBeforeExpiry) {
+            closeBeforeExpiry = 0;
+        }
+
+        if (!optionType) {
+            optionType = "monthly";
+        }
+
+        if (!startYear) {
+            startYear = 2000;
+        }
+
+        var marketDataPromise = MarketDataService.getOptions(marketKey, daysToExpiry, closeBeforeExpiry, optionType, startYear);
+
+        marketDataPromise.then(function(response) {
+            if (response) {
+                $scope.marketData = response;
+
+            }
+
+            $scope.loading = false;
+        });
     }
-]);
+}]);
