@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var winston = require('winston');
 var NodeCache = require("node-cache");
-
 var myCache = new NodeCache();
 
 var marketDataService = {
