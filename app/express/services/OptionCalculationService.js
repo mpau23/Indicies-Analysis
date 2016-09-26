@@ -1,3 +1,5 @@
+var winston = require('winston');
+
 var optionCalculationService = {
 
     getOptionData: function(marketData, volatilityData, monthlyOptions, closeBeforeExpiry) {
@@ -17,7 +19,7 @@ var optionCalculationService = {
                 optionCalculationService.setOptionVolatility(monthlyOption.open, volatilityData, 5);
 
             } else {
-                console.log("No market data for: Expiry=" + expiryDate + ", Open=" + openDate);
+                winston.info("No market data for: Expiry=" + expiryDate + ", Open=" + openDate);
             }
 
         });

@@ -27,6 +27,8 @@ module.exports = function(app) {
 
         winston.info("Calculating option data...");
         var optionData = OptionCalculationService.getOptionData(marketData, volatilityData, options, DBEClose);
+        
+        winston.info("Sending option data...");
         res.send(optionData);
 
     });
