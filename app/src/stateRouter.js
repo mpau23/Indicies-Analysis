@@ -5,16 +5,32 @@ IndiciesAnalysis.config(['$stateProvider', '$urlRouterProvider', '$locationProvi
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-        .state('home', {
-            name: 'home',
+        .state('index', {
             url: '/',
-            templateUrl: 'views/home.html',
-            controller: 'RootCtrl'
+            views: {
+                '@': {
+                    templateUrl: 'views/root.html'
+                },
+                'header@index': {
+                    templateUrl: 'views/root.header.html',
+                    controller: 'HeaderCtrl',
+                },
+
+                '@index': {
+                    templateUrl: 'views/root.home.html',
+                    controller: 'HomeCtrl',
+                }
+            }
         })
-        .state('login', {
-            name: 'login',
-            url: '/login',
-            templateUrl: 'views/login.html',
-            controller: 'LoginCtrl'
+        .state('index.login', {
+            url: 'login',
+            views: {
+                '@index': {
+                    templateUrl: 'views/root.login.html',
+                    controller: 'LoginCtrl',
+                    url: 'login'
+                }
+            }
         });
+
 }]);

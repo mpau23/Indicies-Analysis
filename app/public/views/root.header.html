@@ -1,0 +1,10 @@
+<ul class="nav-left">
+    <li class="logo">Pauer Investments</li>
+</ul>
+<ul class="nav-right">
+    <li class="name" ng-switch on="!!$root.currentUser">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        <a href="/login" ng-switch-when="true">Log Out</a>
+        <a href="/login" ng-switch-when="false">Login</a>
+    </li>
+</ul>
