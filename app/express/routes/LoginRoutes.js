@@ -7,8 +7,6 @@ module.exports = function(app) {
 
     app.get('/api/get/user/by-login/:user', function(req, res) {
 
-        winston.info("Requesting log in");
-
         var loginCredentials = Base64Service.decode(req.params.user);
         var success = false;
 
@@ -16,7 +14,7 @@ module.exports = function(app) {
             var users = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../data/Users.json')));
             for (var i = 0; i < users.length; i++) {
                 if (loginCredentials == users[i].login) {
-                    winston.info("Found user");
+                    winston.info(users[i].name + " logged in");
                     success = true;
                     res.status(200).send({ success: true });
                     break;
@@ -24,12 +22,12 @@ module.exports = function(app) {
             }
 
             if (!success) {
-                winston.info("User not found");
+                winston.info("Login attempt made. User not found");
                 res.status(200).send();
             }
 
         } catch (err) {
-            winston.info("Problem logging in");
+            winston.info("Login attempt made. Problem logging in");
             winston.info(err);
             res.send(err);
         }
