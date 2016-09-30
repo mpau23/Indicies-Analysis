@@ -10,7 +10,7 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
 
             var d3 = $window.d3;
 
-            var x, y, xAxis, yAxis, tip, line;
+            var x, y, y2, xAxis, yAxis, y2Axis, tip, line;
 
             var margin = {
                     top: 20,
@@ -134,6 +134,9 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                     .attr("data-value", function(d) {
                         return d.highLowVariance;
                     })
+                    .attr("data-date", function(d) {
+                        return d.expiry.date;
+                    })
                     .attr("x", function(d) {
                         return x(d.expiry.date);
                     })
@@ -194,13 +197,16 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
 
                 indiciesDataToPlot = newVal;
 
-                var isNew = false;
+                var isRedrawing = false;
 
                 if (indiciesDataToPlot) {
                     if (oldVal) {
-                        isNew = true;
+                        isRedrawing = true;
+                        drawChart(isRedrawing);
+                    } else {
+                        drawChart(isRedrawing);
+                        attachListners();
                     }
-                    drawChart(isNew);
                 }
 
             });
@@ -212,6 +218,47 @@ IndiciesAnalysis.directive('indiciesChartDirective', ['$parse', '$window', funct
                 drawChart(true);
             }
 
+            function attachListners() {
+
+                d3.selectAll('g.y .tick')
+                    .on('mouseover', function(e) {
+
+                        var lineYPosition = d3.transform(d3.select(this).attr("transform")).translate[1];
+                        var highlightedBarsXPositions = new Array();
+
+                        d3.selectAll('.bar').each(function() {
+
+                            var lineHigherThanZero = lineYPosition < y(0);
+                            var barXPosition = d3.select(this).attr("x");
+                            var barHeight = d3.select(this).attr("height");
+
+                            if (lineHigherThanZero) {
+                                var barYPosition = d3.select(this).attr("y");
+                                if (barYPosition < lineYPosition && y(0) > barYPosition && barHeight != 0) {
+                                    highlightedBarsXPositions.push(barXPosition);
+                                }
+
+                            } else {
+                                var barYPosition = parseInt(d3.select(this).attr("y")) + parseInt(d3.select(this).attr("height"));
+                                if (barYPosition > lineYPosition && y(0) < barYPosition && barHeight != 0) {
+                                    highlightedBarsXPositions.push(barXPosition);
+                                }
+                            }
+                        });
+
+                        d3.selectAll('.bar').filter(function() {
+                            return (highlightedBarsXPositions.indexOf(d3.select(this).attr("x")) < 0);
+                        }).each(function() {
+                            d3.select(this).style("opacity", 0.2);
+
+                        });
+                    })
+                    .on('mouseout', function(e) {
+                        d3.selectAll('.bar').each(function() {
+                            d3.select(this).style("opacity", 1);
+                        });
+                    });
+            }
         }
     };
 }]);

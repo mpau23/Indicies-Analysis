@@ -16,11 +16,10 @@
     margin: auto;
     position: absolute;
     top: 0;
-    left: 0; 
+    left: 0;
     bottom: 0;
     right: 0;
     display: none;
-
     &.loading {
         display: block;
     }
@@ -52,6 +51,7 @@
 }
 
 rect {
+    transition: opacity .3s;
     &.variance {
         fill: $deep-blue;
         z-index: 20;

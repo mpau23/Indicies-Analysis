@@ -691,6 +691,9 @@ ul {
   display: none;
 }
 
+rect {
+  transition: opacity .3s;
+}
 rect.variance {
   fill: #3980B5;
   z-index: 20;
