@@ -6,6 +6,7 @@ var fs = require('fs');
 var OptionCalculationService = require('../services/OptionCalculationService');
 var CalendarDataService = require('../services/CalendarDataService');
 var MarketDataService = require('../services/MarketDataService');
+var Promise = require("bluebird");
 
 var myCache = new NodeCache();
 
@@ -19,17 +20,25 @@ module.exports = function(app) {
         var type = req.params.type;
         var startYear = req.params.startYear;
 
-        var marketData = MarketDataService.getMarketData(market)
-        var volatilityData = MarketDataService.getMarketData('VIX');
+        var marketDataPromise = MarketDataService.getMarketData(market)
+        var volatilityDataPromise = MarketDataService.getMarketData('VIX');
 
-        winston.info("Calculating option dates...");
-        var options = CalendarDataService.getOptions(DBEOpen, startYear, type);
+        Promise.all([marketDataPromise, volatilityDataPromise]).then(function(response) {
 
-        winston.info("Calculating option data...");
-        var optionData = OptionCalculationService.getOptionData(marketData, volatilityData, options, DBEClose);
-        
-        winston.info("Sending option data...");
-        res.send(optionData);
+            var marketData = response[0];
+            var volatilityData = response[1];
+
+            winston.info("Calculating option dates...");
+            var options = CalendarDataService.getOptions(DBEOpen, startYear, type);
+
+            winston.info("Calculating option data...");
+            var optionData = OptionCalculationService.getOptionData(marketData, volatilityData, options, DBEClose);
+
+            winston.info("Sending option data...");
+            res.send(optionData);
+        });
+
+
 
     });
 }
