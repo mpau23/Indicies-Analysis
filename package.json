@@ -24,6 +24,7 @@
     "compression": "^1.6.1",
     "datejs": "1.0.0-rc3",
     "express": "^4.13.3",
+    "google-finance": "^0.1.9",
     "method-override": "^2.3.5",
     "node-cache": "^3.1.0",
     "path": "^0.12.7",
