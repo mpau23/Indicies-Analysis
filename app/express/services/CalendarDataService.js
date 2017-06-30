@@ -1,4 +1,5 @@
 var winston = require('winston');
+var Promise = require("bluebird");
 
 var calendarDataService = {
 
