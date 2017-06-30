@@ -22,17 +22,16 @@ module.exports = function(app) {
 
         var marketDataPromise = MarketDataService.getMarketData(market)
         var volatilityDataPromise = MarketDataService.getMarketData('VIX');
+        var options = CalendarDataService.getOptions(DBEOpen, startYear, type);
 
-        Promise.all([marketDataPromise, volatilityDataPromise]).then(function(response) {
+        Promise.all([marketDataPromise, volatilityDataPromise, options]).then(function(response) {
 
             var marketData = response[0];
             var volatilityData = response[1];
-
-            winston.info("Calculating option dates...");
-            var options = CalendarDataService.getOptions(DBEOpen, startYear, type);
+            var optionDates = response[2];
 
             winston.info("Calculating option data...");
-            var optionData = OptionCalculationService.getOptionData(marketData, volatilityData, options, DBEClose);
+            var optionData = OptionCalculationService.getOptionData(marketData, volatilityData, optionDates, DBEClose);
 
             winston.info("Sending option data...");
             res.send(optionData);

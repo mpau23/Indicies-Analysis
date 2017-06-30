@@ -1,15 +1,22 @@
+var winston = require('winston');
+
 var calendarDataService = {
 
-    getMonthlyExpiries: function(startYear) {
+    getMonthlyExpiries: function(startYear, daysUntilExpiry) {
 
         var monthlyExpiresArray = new Array();
         var today = Date.parse("today");
         var startOfMonth = Date.parse("1-1-" + startYear);
         var thirdFridayOfMonth = startOfMonth.moveToNthOccurrence(5, 3);
+        var openDate = Date.parse(thirdFridayOfMonth.toString());
+        openDate.addDays(-daysUntilExpiry);
 
         monthlyExpiresArray.push({
             expiry: {
                 date: thirdFridayOfMonth.toString("d-MMM-yyyy")
+            },
+            open: {
+                date: openDate.toString("d-MMM-yyyy")
             }
 
         });
@@ -17,35 +24,50 @@ var calendarDataService = {
         while (thirdFridayOfMonth < today) {
             startOfMonth.addMonths(1);
             thirdFridayOfMonth = startOfMonth.moveToNthOccurrence(5, 3);
+            openDate = Date.parse(thirdFridayOfMonth.toString());
+            openDate.addDays(-daysUntilExpiry);
+            
             monthlyExpiresArray.push({
                 expiry: {
                     date: thirdFridayOfMonth.toString("d-MMM-yyyy")
+                },
+                open: {
+                    date: openDate.toString("d-MMM-yyyy")
                 }
+
             });
         }
 
         return monthlyExpiresArray;
     },
 
-    getWeeklyExpiries: function(startYear) {
+    getWeeklyExpiries: function(startYear, daysUntilExpiry) {
 
         var weeklyExpiriesArray = new Array();
         var today = Date.parse("today");
         var dates = Date.parse("1-1-" + startYear);
         var nextFridayOccurrence = dates.moveToNthOccurrence(5, 1);
+        var openDate = nextFridayOccurrence.addDays(-daysUntilExpiry);
 
         weeklyExpiriesArray.push({
             expiry: {
                 date: nextFridayOccurrence.toString("d-MMM-yyyy")
+            },
+            open: {
+                daate: openDate.toString("d-MMM-yyyy")
             }
 
         });
 
         while (nextFridayOccurrence < today) {
             nextFridayOccurrence.addDays(7);
+            openDate = nextFridayOccurrence.addDays(-daysUntilExpiry);
             weeklyExpiriesArray.push({
                 expiry: {
                     date: nextFridayOccurrence.toString("d-MMM-yyyy")
+                },
+                open: {
+                    daate: openDate.toString("d-MMM-yyyy")
                 }
             });
         }
@@ -55,23 +77,19 @@ var calendarDataService = {
 
     getOptions: function(daysUntilExpiry, startYear, occurrence) {
 
-        if (occurrence == "weekly") {
-            var expiryArray = calendarDataService.getWeeklyExpiries(startYear);
-        } else {
-            var expiryArray = calendarDataService.getMonthlyExpiries(startYear);
+        winston.info("Calculating " + occurrence + " option dates from year " + startYear + " with " + daysUntilExpiry + " days before expiry")
+        return new Promise(function(resolve, reject) {
 
-        }
-
-
-        expiryArray.forEach(function(monthlyExpiry, index) {
-            var close = Date.parse(monthlyExpiry.expiry.date);
-            close.addDays(-daysUntilExpiry);
-            monthlyExpiry.open = {
-                date: close.toString("d-MMM-yyyy")
+            if (occurrence == "weekly") {
+                var expiryArray = calendarDataService.getWeeklyExpiries(startYear, daysUntilExpiry);
+            } else {
+                var expiryArray = calendarDataService.getMonthlyExpiries(startYear, daysUntilExpiry);
             }
+
+            resolve(expiryArray);
+            winston.info("Calculated option dates : ");
         });
 
-        return expiryArray;
     }
 
 };
