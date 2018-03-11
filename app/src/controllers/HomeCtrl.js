@@ -34,7 +34,7 @@ IndiciesAnalysis.controller('HomeCtrl', ['$scope', '$http', '$q', 'MarketDataSer
         }
 
         if (!startYear) {
-            startYear = 2000;
+            startYear = 2010;
         }
 
         var marketDataPromise = MarketDataService.getOptions(marketKey, daysToExpiry, closeBeforeExpiry, optionType, startYear);
