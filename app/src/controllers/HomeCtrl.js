@@ -8,7 +8,7 @@ IndiciesAnalysis.controller('HomeCtrl', ['$scope', '$http', '$q', 'MarketDataSer
 
     $scope.loading = false;
 
-    renderMarketData("SPY", 15, 0, "monthly", 2000);
+    renderMarketData("SPY", 15, 0, "monthly", 2010);
 
     $scope.changeDaysToExpiry = function() {
         renderMarketData($scope.marketKey.value, $scope.openBeforeExpiry, $scope.closeBeforeExpiry, $scope.optionType.value, $scope.startYear);
